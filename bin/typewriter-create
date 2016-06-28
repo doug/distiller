@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+var fs = require("fs"),
+    program = require("commander");
+
+program
+    .version("0.0.1")
+    .parse(process.argv);
+
+if (!program.args.length) {
+  console.error("Name required");
+  process.exit(1);
+}
+
+var name = program.args[0];
+var now = new Date();
+var path =  name.toLowerCase().replace(" ", "-") + "/";
+
+if (fs.existsSync(path)) {
+  console.error("'" + name + "' already exists");
+  process.exit(1);
+}
+
+fs.mkdirSync(path);
+fs.writeFileSync(path + "index.md", "#Hello World!", "utf8");
+fs.mkdirSync(path + "assets");
+var about = {
+  "name": name,
+  "created": now.getFullYear() + "." + (now.getMonth() + 1) + "." + now.getDate(),
+  "headline": "",
+  "description": "",
+  "authors": [
+    {
+      "name": "",
+      "email": "",
+      "url": "",
+      "affiliation": "",
+      "affiliation-url": ""
+    }
+  ]
+};
+
+fs.writeFileSync(path + "about.json", JSON.stringify(npmConfig, null, 2), "utf8");

@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+var fs = require("fs"),
+    program = require("commander");
+
+program
+  .version("0.0.1")
+  .command("create <name>", "Create a new typewriter project.")
+  .command("serve", "Start a server. Must be executed in the root of the a typewriter project.")
+  .parse(process.argv);

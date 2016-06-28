@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+var spawn = require('child_process').spawn;
+
+var server = spawn("node_modules/.bin/http-server", []);
+console.log("Starting server at localhost:8080");
