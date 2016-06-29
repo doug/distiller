@@ -26,7 +26,7 @@ fs.writeFileSync(path + "index.md", "#Hello World!", "utf8");
 fs.mkdirSync(path + "assets");
 var about = {
   "name": name,
-  "created": now.getFullYear() + "." + (now.getMonth() + 1) + "." + now.getDate(),
+  "created": now,
   "headline": "",
   "description": "",
   "authors": [
@@ -40,4 +40,4 @@ var about = {
   ]
 };
 
-fs.writeFileSync(path + "about.json", JSON.stringify(npmConfig, null, 2), "utf8");
+fs.writeFileSync(path + "about.json", JSON.stringify(about, null, 2), "utf8");

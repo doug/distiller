@@ -1,22 +1,27 @@
-# About
+# About Typewriter
 
-A project folder looks like this:
+`typewriter serve`
+
+`typewriter create`
+
+A typewriter project folder looks like this:
 
 ```
 index.md | index.html
 preview.png | preview.jpg
 about.json
-assets
-- anything else, referenced at "assets/*"
+assets/
 ```
 
-## about.json:
+Assets can referenced from `index.html` with relative paths, such as `"assets/foo.js"`.
+
+The `about.json` file contains metadata about the post. It looks like this:
 
 ```json
 {
   "headline": "",
   "description": "",
-  "id": "",
+  "name": "",
   "authors": [
     {
       "name" : "Barney Rubble",

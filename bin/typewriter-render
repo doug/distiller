@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var fs = require("fs"),
+  program = require("commander"),
+  render = require("./render");
+
+program
+    .version("0.0.1")
+    .parse(process.argv);
+
+
+
+render();
+

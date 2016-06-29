@@ -1,5 +1,48 @@
 #!/usr/bin/env node
-var spawn = require('child_process').spawn;
+'use strict';
 
-var server = spawn("node_modules/.bin/http-server", []);
-console.log("Starting server at localhost:8080");
+var fs = require('fs'),
+  path = require('path'),
+  render = require('./render'),
+  bs = require("browser-sync").create();
+
+// var server = spawn('node_modules/.bin/http-server', []);
+// console.log('Starting server at localhost:8080');
+
+var workingDir = process.cwd();
+let buildDir = path.join(workingDir, 'build');
+let assetsDir = path.join(workingDir, 'assets2');
+
+// Watch index.html
+fs.watch(path.join(workingDir, 'index.html'), (error) => {
+
+  fs.mkdir(buildDir, function (error) {
+    //TODO mask the eexists error, throw others.
+    render(workingDir, (rendered) => {
+      fs.writeFile(path.join(workingDir, 'build', 'index.html'), rendered, (error) => {
+        if (error) throw error;
+      });
+    });
+  });
+});
+
+// TODO Watch index.md
+
+// Watch assets directory
+fs.stat(assetsDir, (error) => {
+  if (error) return;
+  fs.watch(assetsDir, (error) => {
+    //copy assets
+    console.log('copy assets')
+  });
+});
+
+// BrowserSync server
+bs.init({
+  server: './build',
+  files: './build',
+  notify: false,
+  reloadDebounce: 20,
+  injectChanges: false,
+  ui: false
+});
