@@ -4,40 +4,70 @@
 var fs = require('fs'),
   path = require('path'),
   render = require('./render'),
-  bs = require("browser-sync").create();
+  chokidar = require('chokidar'),
+  bs = require("browser-sync").create(),
+  exec = require('child_process').exec;
 
 // var server = spawn('node_modules/.bin/http-server', []);
 // console.log('Starting server at localhost:8080');
 
+let buildDirName = 'build';
+let assetsDirName = 'assets';
+
 var workingDir = process.cwd();
-let buildDir = path.join(workingDir, 'build');
-let assetsDir = path.join(workingDir, 'assets2');
+let buildDir = path.join(workingDir, buildDirName);
+let assetsDir = path.join(workingDir, assetsDirName);
+let buildAssetsDir = path.join(buildDir, assetsDirName);
+
+//TODO async, mask the eexists error, throw others.
+try {
+  fs.mkdirSync(buildDir);
+} catch (error) {
+  console.error(error)
+}
 
 // Watch index.html
-fs.watch(path.join(workingDir, 'index.html'), (error) => {
+var indexWatcher = chokidar.watch(path.join(workingDir, "index.html"));
+indexWatcher
+  .on('ready', file => {
+    renderIndex();
+  })
+  .on('change', file => {
+    renderIndex();
+  });
 
-  fs.mkdir(buildDir, function (error) {
-    //TODO mask the eexists error, throw others.
-    render(workingDir, (rendered) => {
-      fs.writeFile(path.join(workingDir, 'build', 'index.html'), rendered, (error) => {
-        if (error) throw error;
-      });
+function renderIndex() {
+  render(workingDir, (rendered) => {
+    fs.writeFile(path.join(workingDir, buildDirName, 'index.html'), rendered, (error) => {
+      if (error) throw error;
     });
   });
-});
+}
 
 // TODO Watch index.md
 
 // Watch assets directory
-fs.stat(assetsDir, (error) => {
-  if (error) return;
-  fs.watch(assetsDir, (error) => {
-    //copy assets
-    console.log('copy assets')
+// TODO we should do stuff with .css, .ts, etc files.
+// run a prefixer, linter?
+var assetWatcher = chokidar.watch(path.join(assetsDir, "*"));
+assetWatcher
+  .on('ready', file => {
+    //TODO this is a little hacky, no?
+    exec('rm -r ' + buildAssetsDir);
+    exec('cp -r ' + assetsDir + ' ' + buildAssetsDir);
+  })
+  .on('change', file => {
+    let base = path.basename(file);
+    let dir = path.dirname(file).replace(assetsDirName, '');
+    let newFile = path.join(dir, buildDirName, assetsDirName, base);
+    fs.createReadStream(file).pipe(fs.createWriteStream(newFile));
+    console.log(file);
+  })
+  .on('unlink', file => {
+    console.log(file)
   });
-});
 
-// BrowserSync server
+//BrowserSync server
 bs.init({
   server: './build',
   files: './build',
