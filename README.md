@@ -1,5 +1,9 @@
 # About Typewriter
 
+To install, symlink the `bin/typewriter` binary into your working path, something like:
+
+`ln -s bin/typewriter /usr/local/bin/typewriter`
+
 `typewriter create <name>`
 
 Creates a new typewriter project. It will create a folder in your current directory with <name> and create some stub files inside.
