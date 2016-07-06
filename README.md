@@ -2,7 +2,11 @@
 
 ## Installing
 
-To install, symlink the `bin/typewriter` binary into your working path, something like:
+To install, first clone this repo somewhere.
+
+Then, `npm install`.
+
+Finally, symlink the `bin/typewriter` binary into your working path, something like:
 
 `ln -s bin/typewriter /usr/local/bin/typewriter`
 
@@ -15,8 +19,7 @@ Creates a new typewriter project. It will create a folder in your current direct
 A typewriter project folder looks like this:
 
 ```
-index.md | index.html
-preview.png | preview.jpg
+index.html
 about.json
 assets/
 ```
@@ -36,9 +39,8 @@ The `about.json` file contains metadata about the post. It looks like this:
     {
       "name" : "Barney Rubble",
       "email" : "b@rubble.com",
-      "url" : "http://barnyrubble.tumblr.com/",
       "affiliation": "Google Brain",
-      "affiliation-url": "http://barnyrubble.tumblr.com/"
+      "url": "http://barnyrubble.tumblr.com/"
     }
   ]
 }

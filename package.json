@@ -4,17 +4,11 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "npm install && make",
-    "watch": "fswatch -0 --exclude 'node_modules/' --exclude 'build/' --exclude 'public/' . | xargs -0 -n 1 -I {} make all",
-    "serve": "browser-sync start --server 'public' --files 'public' --no-notify --reload-debounce 100 & npm run watch"
   },
   "dependencies": {
     "browser-sync": "^2.13.0",
     "commander": "^2.9.0",
-    "d3": "^3.5.17",
-    "highlight.js": "^9.4.0",
     "marked": "^0.3.5",
-    "material-design-icons": "^2.2.3",
     "mustache": "^2.2.1",
     "chokidar": "latest"
   }
