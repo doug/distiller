@@ -2,7 +2,20 @@
 
 var path = require('path'),
   fs = require('fs'),
-  mustache = require('mustache');
+  mustache = require('mustache'),
+  marked = require('marked');
+
+// Marked rendering options
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: true
+});
 
 // Open and cache the templates
 let templateDir = path.join(__dirname, '..', 'templates');
@@ -21,9 +34,16 @@ module.exports = function (dir, callback) {
   //TODO make this async
   let view = fs.readFileSync(path.join(dir, 'about.json'), 'utf8');
 
-  //TODO if markdown, first render it to html.
+  //if markdown
+  fs.readFile(path.join(dir, 'index.md'), 'utf8', (error, data) => {
+    if (error) return;
+    templates['index.html'] = marked(data);
+    callback(mustache.render(templates['root.html'], view, templates));
+  });
 
+  //if html
   fs.readFile(path.join(dir, 'index.html'), 'utf8', (error, data) => {
+    if (error) return;
     templates['index.html'] = data;
     callback(mustache.render(templates['root.html'], view, templates));
   });

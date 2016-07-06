@@ -27,12 +27,15 @@ try {
 }
 
 // Watch index.html
-var indexWatcher = chokidar.watch(path.join(workingDir, "index.html"));
+var indexWatcher = chokidar.watch([path.join(workingDir, "index.html"), path.join(workingDir, "index.md")]);
 indexWatcher
   .on('ready', file => {
     renderIndex();
   })
   .on('change', file => {
+    renderIndex();
+  })
+  .on('add', file => {
     renderIndex();
   });
 
@@ -43,8 +46,6 @@ function renderIndex() {
     });
   });
 }
-
-// TODO Watch index.md
 
 // Watch assets directory
 // TODO we should do stuff with .css, .ts, etc files.
