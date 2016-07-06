@@ -6,8 +6,8 @@ var fs = require("fs"),
 program
   .version("0.0.1")
   .command("create <name>", "Creates a new typewriter project. It will create a folder in your current directory with <name> and create some stub files inside.")
-  .command("install", "Creates a symbolic link in ~/bin to the typewriter binary.")
-  .command("render", "Renders a file.")
+  // .command("install", "Creates a symbolic link in ~/bin to the typewriter binary.")
+  // .command("render", "Renders a file.")
   .command("serve", "Starts a server. Must be executed in the root of the a typewriter project.")
-  .command("update", "Updates your local installation of typewriter with the latest version from the git server.")
+  // .command("update", "Updates your local installation of typewriter with the latest version from the git server.")
   .parse(process.argv);
