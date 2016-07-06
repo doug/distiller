@@ -14,17 +14,17 @@ Finally, symlink the `bin/typewriter` binary into your working path, something l
 
 `typewriter create <name>`
 
-Creates a new typewriter project. It will create a folder in your current directory with <name> and create some stub files inside.
+Creates a new typewriter project. It will create a folder in your current directory with `<name>` and create some stub files inside.
 
 A typewriter project folder looks like this:
 
 ```
-index.html
+index.html | index.md
 about.json
 assets/
 ```
 
-`index.html` is an html fragment that defines your post. Typewriter will wrap it in the necessary blog html.
+`index.html` is an html fragment that defines your post, or a `index.md` markdown file. Typewriter will wrap it in the necessary blog html.
 
 Assets can referenced with relative paths, such as `"assets/foo.js"`.
 
