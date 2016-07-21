@@ -163,3 +163,24 @@ figure {
     margin-left: calc((100vw - 1200px) / 2);
   }
 }
+
+/**
+ * Figures and Captions
+ */
+
+.post figure.side-saddle-right,
+.post figure.side-saddle-left {
+  position: relative;
+}
+
+.post figure.side-saddle-right figcaption {
+  width: 150px;
+  position: absolute;
+  right: -170px;
+}
+
+.post figure.side-saddle-left figcaption {
+  width: 150px;
+  position: absolute;
+  left: -170px;
+}

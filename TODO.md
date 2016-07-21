@@ -1,0 +1,2 @@
+- Adding new assets don't show up until rebump the server.
+- Installing typewriter didn't work because of relative paths to typewriter in readme.
