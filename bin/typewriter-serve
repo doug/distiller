@@ -73,5 +73,6 @@ bs.init({
   notify: false,
   reloadDebounce: 20,
   injectChanges: false,
+  open: false,
   ui: false
 });
