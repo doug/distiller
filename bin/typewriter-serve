@@ -8,9 +8,6 @@ var fs = require('fs'),
   bs = require("browser-sync").create(),
   exec = require('child_process').exec;
 
-// var server = spawn('node_modules/.bin/http-server', []);
-// console.log('Starting server at localhost:8080');
-
 let buildDirName = 'build';
 let assetsDirName = 'assets';
 
@@ -50,6 +47,7 @@ function renderIndex() {
 // Watch assets directory
 // TODO we should do stuff with .css, .ts, etc files.
 // run a prefixer, linter?
+// adding files not handled?
 var assetWatcher = chokidar.watch(path.join(assetsDir, "*"));
 assetWatcher
   .on('ready', file => {

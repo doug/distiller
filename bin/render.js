@@ -12,7 +12,7 @@ marked.setOptions({
   tables: true,
   breaks: false,
   pedantic: false,
-  sanitize: true,
+  sanitize: false,
   smartLists: true,
   smartypants: true
 });
@@ -34,6 +34,7 @@ module.exports = function (dir, callback) {
   //TODO make this async
   let view = fs.readFileSync(path.join(dir, 'about.json'), 'utf8');
 
+  //TODO I think this should happen outside this script. Render should be dumb.
   //if markdown
   fs.readFile(path.join(dir, 'index.md'), 'utf8', (error, data) => {
     if (error) return;
