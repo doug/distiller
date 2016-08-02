@@ -55,16 +55,20 @@ assetWatcher
     exec('rm -r ' + buildAssetsDir);
     exec('cp -r ' + assetsDir + ' ' + buildAssetsDir);
   })
-  .on('change', file => {
-    let base = path.basename(file);
-    let dir = path.dirname(file).replace(assetsDirName, '');
-    let newFile = path.join(dir, buildDirName, assetsDirName, base);
-    fs.createReadStream(file).pipe(fs.createWriteStream(newFile));
-    console.log(file);
-  })
+  .on('change', moveFile)
+  .on('add', moveFile)
   .on('unlink', file => {
-    console.log(file)
+    //TODO remove from assets dir.
+    console.log(file + " has been removed.")
   });
+
+function moveFile(file) {
+  let base = path.basename(file);
+  let dir = path.dirname(file).replace(assetsDirName, '');
+  let newFile = path.join(dir, buildDirName, assetsDirName, base);
+  fs.createReadStream(file).pipe(fs.createWriteStream(newFile));
+  renderIndex();
+}
 
 //BrowserSync server
 bs.init({
