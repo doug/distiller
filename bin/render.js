@@ -20,7 +20,7 @@ marked.setOptions({
 // Open and cache the templates
 let templateDir = path.join(__dirname, '..', 'templates');
 let templates = {};
-let templateFiles = fs.readdirSync(templateDir)
+fs.readdirSync(templateDir)
   .filter((file) => {
     return fs.statSync(path.join(templateDir, file)).isFile();
   })
@@ -29,7 +29,22 @@ let templateFiles = fs.readdirSync(templateDir)
   });
 
 module.exports = function (dir, callback) {
-  console.log('render');
+  let assetsDir = path.join(dir, 'assets')
+  //Open .html and .svg files in "_assets" and add those to templates
+  let assetTemplates = {};
+  fs.readdirSync(assetsDir)
+    .filter((file) => {
+      return path.extname(file) === '.html' || path.extname(file) === '.svg';
+    })
+    .filter((file) => {
+      return fs.statSync(path.join(assetsDir, file)).isFile();
+    })
+    .forEach((file) => {
+      let contents = fs.readFileSync(path.join(assetsDir, file), 'utf8');
+      //Remove the xml file header for svg files
+      contents = contents.replace(/<\?xml(.+?)\?>/, '');
+      assetTemplates['assets/' + file] = contents;
+    });
 
   //TODO make this async
   let view = fs.readFileSync(path.join(dir, 'about.json'), 'utf8');
@@ -38,14 +53,15 @@ module.exports = function (dir, callback) {
   //if markdown
   fs.readFile(path.join(dir, 'index.md'), 'utf8', (error, data) => {
     if (error) return;
-    templates['index.html'] = marked(data);
+    let html = marked(mustache.render(data, view, assetTemplates));
+    templates['index.html'] = html;
     callback(mustache.render(templates['root.html'], view, templates));
   });
 
   //if html
   fs.readFile(path.join(dir, 'index.html'), 'utf8', (error, data) => {
     if (error) return;
-    templates['index.html'] = data;
+    templates['index.html'] = mustache.render(data, view, assetTemplates);
     callback(mustache.render(templates['root.html'], view, templates));
   });
 }
