@@ -26,15 +26,9 @@ try {
 // Watch index.html
 var indexWatcher = chokidar.watch([path.join(workingDir, "index.html"), path.join(workingDir, "index.md")]);
 indexWatcher
-  .on('ready', file => {
-    renderIndex();
-  })
-  .on('change', file => {
-    renderIndex();
-  })
-  .on('add', file => {
-    renderIndex();
-  });
+  .on('ready', renderIndex)
+  .on('change', renderIndex)
+  .on('add', renderIndex);
 
 function renderIndex() {
   render(workingDir, (rendered) => {
@@ -55,14 +49,15 @@ assetWatcher
     exec('rm -r ' + buildAssetsDir);
     exec('cp -r ' + assetsDir + ' ' + buildAssetsDir);
   })
-  .on('change', moveFile)
-  .on('add', moveFile)
+  .on('change', copyAsset)
+  //TODO this renders the html for each file in assets on startup.
+  .on('add', copyAsset)
   .on('unlink', file => {
     //TODO remove from assets dir.
     console.log(file + " has been removed.")
   });
 
-function moveFile(file) {
+function copyAsset(file) {
   let base = path.basename(file);
   let dir = path.dirname(file).replace(assetsDirName, '');
   let newFile = path.join(dir, buildDirName, assetsDirName, base);

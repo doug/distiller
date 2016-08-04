@@ -17,7 +17,7 @@ marked.setOptions({
   smartypants: true
 });
 
-// Open and cache the templates
+// Open and cache the templates in typewriter
 let templateDir = path.join(__dirname, '..', 'templates');
 let templates = {};
 fs.readdirSync(templateDir)
@@ -29,12 +29,15 @@ fs.readdirSync(templateDir)
   });
 
 module.exports = function (dir, callback) {
-  let assetsDir = path.join(dir, 'assets')
-  //Open .html and .svg files in "_assets" and add those to templates
+  let assetsDir = path.join(dir, 'assets');
+  let view = fs.readFileSync(path.join(dir, 'about.json'), 'utf8');
+
+  //Open text "_assets" and add those to available partials
+  let textExtensions = ['.js', '.css', '.svg'];
   let assetTemplates = {};
   fs.readdirSync(assetsDir)
     .filter((file) => {
-      return path.extname(file) === '.html' || path.extname(file) === '.svg';
+      return textExtensions.indexOf(path.extname(file)) > -1;
     })
     .filter((file) => {
       return fs.statSync(path.join(assetsDir, file)).isFile();
@@ -46,15 +49,23 @@ module.exports = function (dir, callback) {
       assetTemplates['assets/' + file] = contents;
     });
 
-  //TODO make this async
-  let view = fs.readFileSync(path.join(dir, 'about.json'), 'utf8');
+  //Render html in "_assets" with partials in "_assets" and add to partials
+  fs.readdirSync(assetsDir)
+    .filter((file) => { return path.extname(file) === '.html'; })
+    .forEach((file) => {
+      let contents = fs.readFileSync(path.join(assetsDir, file), 'utf8');
+      let html = mustache.render(contents, view, assetTemplates);
+      assetTemplates['assets/' + file] = html;
+    });
 
-  //TODO I think this should happen outside this script. Render should be dumb.
   //if markdown
   fs.readFile(path.join(dir, 'index.md'), 'utf8', (error, data) => {
     if (error) return;
-    let html = marked(mustache.render(data, view, assetTemplates));
-    templates['index.html'] = html;
+    let html = marked(data);
+    //Marked will replace the greater than symbol with an html entity. Sucks.
+    html = html.replace(/{{&gt;/g, '{{>');
+    let renderedHtml = mustache.render(html, view, assetTemplates);
+    templates['index.html'] = renderedHtml;
     callback(mustache.render(templates['root.html'], view, templates));
   });
 
