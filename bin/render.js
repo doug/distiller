@@ -30,7 +30,14 @@ fs.readdirSync(templateDir)
 
 module.exports = function (dir, callback) {
   let assetsDir = path.join(dir, 'assets');
-  let view = fs.readFileSync(path.join(dir, 'about.json'), 'utf8');
+  let view = [];
+
+  //Open package.json and add typewriter vars to partials
+  fs.readFile(path.join(dir, 'package.json'), 'utf8', (error, data) => {
+    if (error) return;
+    let typewriterData = JSON.parse(data);
+    view = typewriterData;
+  });
 
   //Open text "_assets" and add those to available partials
   let textExtensions = ['.js', '.css', '.svg'];
