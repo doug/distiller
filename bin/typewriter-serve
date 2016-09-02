@@ -16,6 +16,10 @@ let buildDir = path.join(workingDir, buildDirName);
 let assetsDir = path.join(workingDir, assetsDirName);
 let buildAssetsDir = path.join(buildDir, assetsDirName);
 
+//TODO this is a little hacky, no?
+exec('rm -r ' + buildAssetsDir);
+exec('cp -r ' + assetsDir + ' ' + buildAssetsDir);
+
 //TODO async, mask the eexists error, throw others.
 try {
   fs.mkdirSync(buildDir);
@@ -24,11 +28,10 @@ try {
 }
 
 // Watch index.html
+renderIndex();
+
 var indexWatcher = chokidar.watch([path.join(workingDir, "index.html"), path.join(workingDir, "index.md")]);
-indexWatcher
-  .on('ready', renderIndex)
-  .on('change', renderIndex)
-  .on('add', renderIndex);
+indexWatcher.on('change', renderIndex);
 
 function renderIndex() {
   render(workingDir, (rendered) => {
@@ -44,11 +47,6 @@ function renderIndex() {
 // adding files not handled?
 var assetWatcher = chokidar.watch(path.join(assetsDir, "*"));
 assetWatcher
-  .on('ready', file => {
-    //TODO this is a little hacky, no?
-    exec('rm -r ' + buildAssetsDir);
-    exec('cp -r ' + assetsDir + ' ' + buildAssetsDir);
-  })
   .on('change', copyAsset)
   //TODO this renders the html for each file in assets on startup.
   .on('add', copyAsset)
