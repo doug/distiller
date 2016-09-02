@@ -17,6 +17,8 @@ marked.setOptions({
   smartypants: true
 });
 
+let months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
 // Open and cache the templates in typewriter
 let templateDir = path.join(__dirname, '..', 'templates');
 let templates = {};
@@ -39,8 +41,10 @@ module.exports = function (dir, callback) {
     view = typewriterData;
     view.typewriter.firstPublished = new Date(view.typewriter.firstPublished);
     view.typewriter.firstPublishedYear = view.typewriter.firstPublished.getFullYear();
+    view.typewriter.firstPublishedMonth = months[view.typewriter.firstPublished.getMonth()];
+    view.typewriter.firstPublishedDate = view.typewriter.firstPublished.getDate();
     view.typewriter.lastPublished = new Date(view.typewriter.lastPublished);
-    view.typewriter.concatenatedAuthors = view.typewriter.authors.map((author) => author.lastName).join(", ")
+    view.typewriter.concatenatedAuthors = view.typewriter.authors.map((author) => author.lastName).join(", ");
   });
 
   //Open text "_assets" and add those to available partials
