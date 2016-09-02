@@ -37,11 +37,15 @@ module.exports = function (dir, callback) {
     if (error) return;
     let typewriterData = JSON.parse(data);
     view = typewriterData;
+    view.typewriter.firstPublished = new Date(view.typewriter.firstPublished);
+    view.typewriter.firstPublishedYear = view.typewriter.firstPublished.getFullYear();
+    view.typewriter.lastPublished = new Date(view.typewriter.lastPublished);
+    view.typewriter.concatenatedAuthors = view.typewriter.authors.map((author) => author.lastName).join(", ")
   });
 
   //Open text "_assets" and add those to available partials
   let textExtensions = ['.js', '.css', '.svg'];
-  let assetTemplates = {};
+  let assetTemplates = JSON.parse(JSON.stringify(templates));
   fs.readdirSync(assetsDir)
     .filter((file) => {
       return textExtensions.indexOf(path.extname(file)) > -1;

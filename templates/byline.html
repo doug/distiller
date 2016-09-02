@@ -1,0 +1,18 @@
+<div class="byline">
+  <div class="authors">
+  {{#typewriter.authors}}
+    <div class="author">
+      <div class="name">{{firstName}} {{lastName}}</div>
+      <div class="affiliation">{{affiliation}}</div>
+    </div>
+  {{/typewriter.authors}}
+  </div>
+  <div class="date">
+    <div class="month">{{typewriter.firstPublished}}</div>
+    <div class="year">{{typewriter.firstPublishedYear}}</div>
+  </div>
+  <div class="citation">
+    <div>{{typewriter.concatenatedAuthors}}, {{typewriter.firstPublishedYear}}</div>
+    <div>BibTeX</div> <!-- This should be a link. -->
+  </div>
+</div>
