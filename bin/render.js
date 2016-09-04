@@ -48,7 +48,7 @@ module.exports = function (dir, callback) {
   });
 
   //Open text "_assets" and add those to available partials
-  let textExtensions = ['.js', '.css', '.svg'];
+  let textExtensions = ['.js', '.css', '.svg', '.csv', '.txt', '.html'];
   let assetTemplates = JSON.parse(JSON.stringify(templates));
   fs.readdirSync(assetsDir)
     .filter((file) => {
