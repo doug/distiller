@@ -3,18 +3,34 @@
   <title>{{typewriter.title}} — Distill</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=1024">
-  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+
+  <meta name="keywords" content="neural networks,machine learning">
+
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="{{typewriter.title}}"/>
+  <meta property="og:description" content="{{typewriter.description}}">
+  <meta property="og:url" content="{{typewriter.url}}"/>
+  <meta property="og:image" content="{{typewriter.url}}/thumbnail.png"/>
+
+  <meta name="twitter:card" value="summary_large_image">
+  <meta name="twitter:title" content="{{typewriter.title}}">
+  <meta name="twitter:description" content="{{typewriter.description}}">
+  <meta name="twitter:url" content="{{typewriter.url}}">
+  <meta name="twitter:image" content="{{typewriter.url}}/thumbnail.png">
+  <meta name="twitter:image:width" content="560">
+  <meta name="twitter:image:height" content="295">
+
+  <meta name="author" content="{{typewriter.concatenatedAuthors}}">
 
   <meta name="citation_title" content="{{typewriter.title}}">
   {{#typewriter.authors}}
   <meta name="citation_author" content="{{lastName}}, {{firstName}}">
   {{/typewriter.authors}}
-  <meta name="citation_publication_date" content="{{datePublished}}">
-  <!--2016/08/30-->
+  <meta name="citation_publication_date" content="{{typewriter.firstPublishedYear}}/{{typewriter.citationMonth}}/{{typewriter.citationDate}}">
   <meta name="citation_journal_title" content="Distill">
 
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Open+Sans:300,400,400i,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons|PT+Serif:500|Open+Sans:300,400,400i,600,700" rel="stylesheet">
 </head>
 
 <body>

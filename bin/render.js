@@ -18,6 +18,9 @@ marked.setOptions({
 });
 
 let months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+let zeroPadding = function(n) {
+  return n < 10 ? "0" + n : n;
+}
 
 // Open and cache the templates in typewriter
 let templateDir = path.join(__dirname, '..', 'templates');
@@ -44,6 +47,8 @@ module.exports = function (dir, callback) {
     view.typewriter.firstPublishedMonth = months[view.typewriter.firstPublished.getMonth()];
     view.typewriter.firstPublishedDate = view.typewriter.firstPublished.getDate();
     view.typewriter.lastPublished = new Date(view.typewriter.lastPublished);
+    view.typewriter.citationDate = zeroPadding(view.typewriter.firstPublished.getDate());
+    view.typewriter.citationMonth = zeroPadding(view.typewriter.firstPublished.getMonth() + 1);
     if (view.typewriter.authors.length  > 2) {
       view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName + ", et al.";
     } else if (view.typewriter.authors.length === 2) {

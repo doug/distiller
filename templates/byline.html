@@ -2,8 +2,8 @@
   <div class="authors">
   {{#typewriter.authors}}
     <div class="author">
-      <div class="name">{{firstName}} {{lastName}}</div>
-      <div class="affiliation">{{affiliation}}</div>
+      <a class="name" href="{{personalURL}}">{{firstName}} {{lastName}}</a>
+      <a class="affiliation" href="{{affiliationURL}}">{{affiliation}}</a>
     </div>
   {{/typewriter.authors}}
   </div>
@@ -11,8 +11,8 @@
     <div class="month">{{typewriter.firstPublishedMonth}}. {{typewriter.firstPublishedDate}}</div>
     <div class="year">{{typewriter.firstPublishedYear}}</div>
   </div>
-  <div class="citation">
+  <a class="citation" href="#citation">
     <div>{{typewriter.concatenatedAuthors}}, {{typewriter.firstPublishedYear}}</div>
-    <div>BibTeX</div> <!-- This should be a link. -->
-  </div>
+    <div>Cite</div>
+  </a>
 </div>
