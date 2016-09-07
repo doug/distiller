@@ -44,7 +44,18 @@ module.exports = function (dir, callback) {
     view.typewriter.firstPublishedMonth = months[view.typewriter.firstPublished.getMonth()];
     view.typewriter.firstPublishedDate = view.typewriter.firstPublished.getDate();
     view.typewriter.lastPublished = new Date(view.typewriter.lastPublished);
-    view.typewriter.concatenatedAuthors = view.typewriter.authors.map((author) => author.lastName).join(", ");
+    if (view.typewriter.authors.length  > 2) {
+      view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName + ", et al.";
+    } else if (view.typewriter.authors.length === 2) {
+      view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName + " & " + view.typewriter.authors[1].lastName;
+    } else if (view.typewriter.authors.length === 1) {
+      view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName
+    }
+    view.typewriter.bibtexAuthors = view.typewriter.authors.map(function(author){
+      return author.lastName + ", " + author.firstName;
+    }).join(" and ");
+
+    view.typewriter.slug = view.typewriter.authors[0].lastName.toLowerCase() + view.typewriter.firstPublishedYear + view.typewriter.title.split(" ")[0].toLowerCase()
   });
 
   //Open text "_assets" and add those to available partials
