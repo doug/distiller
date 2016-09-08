@@ -5,8 +5,15 @@ var fs = require('fs'),
   path = require('path'),
   render = require('./render'),
   chokidar = require('chokidar'),
-  bs = require("browser-sync").create(),
-  exec = require('child_process').exec;
+  exec = require('child_process').execSync;
+
+var StaticServer = require('static-server');
+var server = new StaticServer({
+  rootPath: './build',            // required, the root of the server file tree
+  port: 3000,               // optional, defaults to a random port
+//  host: '10.0.0.100',       // optional, defaults to any interface
+  cors: '*'                 // optional, defaults to undefined
+});
 
 let buildDirName = 'build';
 let assetsDirName = 'assets';
@@ -16,22 +23,14 @@ let buildDir = path.join(workingDir, buildDirName);
 let assetsDir = path.join(workingDir, assetsDirName);
 let buildAssetsDir = path.join(buildDir, assetsDirName);
 
-//TODO this is a little hacky, no?
-exec('rm -r ' + buildAssetsDir);
-exec('cp -r ' + assetsDir + ' ' + buildAssetsDir);
-
-//TODO async, mask the eexists error, throw others.
+// remove old directory, create and copy new one
+exec('rm -rf ' + buildDir);
 try {
   fs.mkdirSync(buildDir);
 } catch (error) {
   console.error(error)
 }
-
-// Watch index.html
-renderIndex();
-
-var indexWatcher = chokidar.watch([path.join(workingDir, "index.html"), path.join(workingDir, "index.md")]);
-indexWatcher.on('change', renderIndex);
+exec('cp -r ' + assetsDir + ' ' + buildAssetsDir);
 
 function renderIndex() {
   render(workingDir, (rendered) => {
@@ -40,11 +39,14 @@ function renderIndex() {
     });
   });
 }
+renderIndex();
+
+var indexWatcher = chokidar.watch([path.join(workingDir, "index.html"), path.join(workingDir, "index.md")]);
+indexWatcher.on('change', renderIndex);
 
 // Watch assets directory
 // TODO we should do stuff with .css, .ts, etc files.
 // run a prefixer, linter?
-// adding files not handled?
 var assetWatcher = chokidar.watch(path.join(assetsDir, "*"));
 assetWatcher
   .on('change', copyAsset)
@@ -63,13 +65,12 @@ function copyAsset(file) {
   renderIndex();
 }
 
-//BrowserSync server
-bs.init({
-  server: './build',
-  files: './build',
-  notify: false,
-  reloadDebounce: 20,
-  injectChanges: false,
-  open: false,
-  ui: false
+
+server.start(function () {
+  console.log('Server listening to', server.port);
 });
+//
+// server.on('request', function (req, res) {
+//   // req.path is the URL resource (file name) from server.rootPath
+//   // req.elapsedTime returns a string of the request's elapsed time
+// });
