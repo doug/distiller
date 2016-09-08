@@ -10,14 +10,14 @@
   <meta property="og:type" content="article"/>
   <meta property="og:title" content="{{typewriter.title}}"/>
   <meta property="og:description" content="{{typewriter.description}}">
-  <meta property="og:url" content="{{typewriter.url}}"/>
-  <meta property="og:image" content="{{typewriter.url}}/thumbnail.png"/>
+  <meta property="og:url" content="{{{typewriter.url}}}"/>
+  <meta property="og:image" content="{{{typewriter.url}}}thumbnail.png"/>
 
   <meta name="twitter:card" value="summary_large_image">
   <meta name="twitter:title" content="{{typewriter.title}}">
   <meta name="twitter:description" content="{{typewriter.description}}">
-  <meta name="twitter:url" content="{{typewriter.url}}">
-  <meta name="twitter:image" content="{{typewriter.url}}/thumbnail.png">
+  <meta name="twitter:url" content="{{{typewriter.url}}}">
+  <meta name="twitter:image" content="{{{typewriter.url}}}thumbnail.png">
   <meta name="twitter:image:width" content="560">
   <meta name="twitter:image:height" content="295">
 
@@ -34,7 +34,7 @@
 </head>
 
 <body>
-  {{> header.html}}
+  {{! header.html}}
   <style>
     {{> common.css}}
   </style>
