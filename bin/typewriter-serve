@@ -34,9 +34,7 @@ exec('cp -r ' + assetsDir + ' ' + buildAssetsDir);
 
 function renderIndex() {
   render(workingDir, (rendered) => {
-    fs.writeFile(path.join(workingDir, buildDirName, 'index.html'), rendered, (error) => {
-      if (error) throw error;
-    });
+    fs.writeFileSync(path.join(workingDir, buildDirName, 'index.html'), rendered);
   });
 }
 renderIndex();
@@ -62,15 +60,11 @@ function copyAsset(file) {
   let dir = path.dirname(file).replace(assetsDirName, '');
   let newFile = path.join(dir, buildDirName, assetsDirName, base);
   fs.createReadStream(file).pipe(fs.createWriteStream(newFile));
-  renderIndex();
 }
-
 
 server.start(function () {
   console.log('Server listening to', server.port);
 });
-//
-// server.on('request', function (req, res) {
-//   // req.path is the URL resource (file name) from server.rootPath
-//   // req.elapsedTime returns a string of the request's elapsed time
-// });
+server.on('request', function (req, res) {
+  renderIndex();
+});
