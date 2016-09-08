@@ -38,30 +38,28 @@ module.exports = function (dir, callback) {
   let view = [];
 
   //Open package.json and add typewriter vars to partials
-  fs.readFile(path.join(dir, 'package.json'), 'utf8', (error, data) => {
-    if (error) return;
-    let typewriterData = JSON.parse(data);
-    view = typewriterData;
-    view.typewriter.firstPublished = new Date(view.typewriter.firstPublished);
-    view.typewriter.firstPublishedYear = view.typewriter.firstPublished.getFullYear();
-    view.typewriter.firstPublishedMonth = months[view.typewriter.firstPublished.getMonth()];
-    view.typewriter.firstPublishedDate = view.typewriter.firstPublished.getDate();
-    view.typewriter.lastPublished = new Date(view.typewriter.lastPublished);
-    view.typewriter.citationDate = zeroPadding(view.typewriter.firstPublished.getDate());
-    view.typewriter.citationMonth = zeroPadding(view.typewriter.firstPublished.getMonth() + 1);
-    if (view.typewriter.authors.length  > 2) {
-      view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName + ", et al.";
-    } else if (view.typewriter.authors.length === 2) {
-      view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName + " & " + view.typewriter.authors[1].lastName;
-    } else if (view.typewriter.authors.length === 1) {
-      view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName
-    }
-    view.typewriter.bibtexAuthors = view.typewriter.authors.map(function(author){
-      return author.lastName + ", " + author.firstName;
-    }).join(" and ");
+  var packageText = fs.readFileSync(path.join(dir, 'package.json'), 'utf8');
+  let typewriterData = JSON.parse(packageText);
+  view = typewriterData;
+  view.typewriter.firstPublished = new Date(view.typewriter.firstPublished);
+  view.typewriter.firstPublishedYear = view.typewriter.firstPublished.getFullYear();
+  view.typewriter.firstPublishedMonth = months[view.typewriter.firstPublished.getMonth()];
+  view.typewriter.firstPublishedDate = view.typewriter.firstPublished.getDate();
+  view.typewriter.lastPublished = new Date(view.typewriter.lastPublished);
+  view.typewriter.citationDate = zeroPadding(view.typewriter.firstPublished.getDate());
+  view.typewriter.citationMonth = zeroPadding(view.typewriter.firstPublished.getMonth() + 1);
+  if (view.typewriter.authors.length  > 2) {
+    view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName + ", et al.";
+  } else if (view.typewriter.authors.length === 2) {
+    view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName + " & " + view.typewriter.authors[1].lastName;
+  } else if (view.typewriter.authors.length === 1) {
+    view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName
+  }
+  view.typewriter.bibtexAuthors = view.typewriter.authors.map(function(author){
+    return author.lastName + ", " + author.firstName;
+  }).join(" and ");
 
-    view.typewriter.slug = view.typewriter.authors[0].lastName.toLowerCase() + view.typewriter.firstPublishedYear + view.typewriter.title.split(" ")[0].toLowerCase()
-  });
+  view.typewriter.slug = view.typewriter.authors[0].lastName.toLowerCase() + view.typewriter.firstPublishedYear + view.typewriter.title.split(" ")[0].toLowerCase()
 
   //Open text "_assets" and add those to available partials
   let textExtensions = ['.js', '.css', '.svg', '.csv', '.txt', '.html'];
