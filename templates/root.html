@@ -2,17 +2,27 @@
 <head>
   <title>{{typewriter.title}} — Distill</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=1024">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <link rel="icon" type="image/png" href="/favicon.png" />
 
-  <meta name="keywords" content="neural networks,machine learning">
+  <meta name="author" content="{{typewriter.concatenatedAuthors}}">
 
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="{{typewriter.firstPublished}}" />
+  <meta property="article:modified" itemprop="dateModified" content="{{typewriter.lastPublished}}" />
+  {{#typewriter.authors}}
+  <meta property="article:author" content="{{personalURL}}" />
+  {{/typewriter.authors}}
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:type" content="article"/>
   <meta property="og:title" content="{{typewriter.title}}"/>
   <meta property="og:description" content="{{typewriter.description}}">
   <meta property="og:url" content="{{{typewriter.url}}}"/>
   <meta property="og:image" content="{{{typewriter.url}}}thumbnail.png"/>
 
+  <!--  https://dev.twitter.com/cards/types/summary -->
   <meta name="twitter:card" value="summary_large_image">
   <meta name="twitter:title" content="{{typewriter.title}}">
   <meta name="twitter:description" content="{{typewriter.description}}">
@@ -21,8 +31,7 @@
   <meta name="twitter:image:width" content="560">
   <meta name="twitter:image:height" content="295">
 
-  <meta name="author" content="{{typewriter.concatenatedAuthors}}">
-
+  <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
   <meta name="citation_title" content="{{typewriter.title}}">
   {{#typewriter.authors}}
   <meta name="citation_author" content="{{lastName}}, {{firstName}}">
@@ -30,7 +39,6 @@
   <meta name="citation_publication_date" content="{{typewriter.firstPublishedYear}}/{{typewriter.citationMonth}}/{{typewriter.citationDate}}">
   <meta name="citation_journal_title" content="Distill">
 
-  <link rel="icon" type="image/png" href="/favicon.png" />
   <link href="https://fonts.googleapis.com/css?family=PT+Serif|Open+Sans:300,400,400i,600,700|Material+Icons" rel="stylesheet">
 </head>
 

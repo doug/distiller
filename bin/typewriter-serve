@@ -7,13 +7,7 @@ var fs = require('fs'),
   chokidar = require('chokidar'),
   exec = require('child_process').execSync;
 
-var StaticServer = require('static-server');
-var server = new StaticServer({
-  rootPath: './build',            // required, the root of the server file tree
-  port: 3000,               // optional, defaults to a random port
-//  host: '10.0.0.100',       // optional, defaults to any interface
-  cors: '*'                 // optional, defaults to undefined
-});
+var ss = require('node-static');
 
 let buildDirName = 'build';
 let assetsDirName = 'assets';
@@ -32,15 +26,12 @@ try {
 }
 exec('cp -r ' + assetsDir + ' ' + buildAssetsDir);
 
-function renderIndex() {
+function renderIndex(callback) {
   render(workingDir, (rendered) => {
     fs.writeFileSync(path.join(workingDir, buildDirName, 'index.html'), rendered);
+    callback();
   });
 }
-renderIndex();
-
-var indexWatcher = chokidar.watch([path.join(workingDir, "index.html"), path.join(workingDir, "index.md")]);
-indexWatcher.on('change', renderIndex);
 
 // Watch assets directory
 // TODO we should do stuff with .css, .ts, etc files.
@@ -62,9 +53,10 @@ function copyAsset(file) {
   fs.createReadStream(file).pipe(fs.createWriteStream(newFile));
 }
 
-server.start(function () {
-  console.log('Server listening to', server.port);
-});
-server.on('request', function (req, res) {
-  renderIndex();
-});
+var fileServer = new ss.Server('./build');
+
+require('http').createServer(function (request, response) {
+    request.addListener('end', function () {
+        renderIndex(() => fileServer.serve(request, response));
+    }).resume();
+}).listen(3000);

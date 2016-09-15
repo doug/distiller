@@ -5,11 +5,10 @@
   "private": true,
   "scripts": {},
   "dependencies": {
-    "browser-sync": "^2.13.0",
     "chokidar": "^1.6.0",
     "commander": "^2.9.0",
     "marked": "^0.3.5",
     "mustache": "^2.2.1",
-    "static-server": "^2.0.3"
+    "node-static": "^0.7.8"
   }
 }
