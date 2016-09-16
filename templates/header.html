@@ -3,31 +3,27 @@
     font-family: 'Open Sans', sans;
     font-weight: 300;
     box-sizing: border-box;
-    background: #fcfcfc;
+    background: hsl(276, 66%, 30%);
     position: relative;
     z-index: 2;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   .header .content {
-    margin: 0 30px;
   }
 
   .header a {
-    font-size: 13px;
+    font-size: 16px;
     height: 60px;
     line-height: 60px;
     text-decoration: none;
-    color: #999;
+    color: rgba(255, 255, 255, 0.6);
   }
 
   .header .logo {
-    height: 60px;
-    line-height: 60px;
-    /*background: rgba(0, 0, 0, 0.05);*/
-    text-transform: uppercase;
   }
 
-  .header .logo i {
+  .header i.material-icons {
     position: relative;
     top: 7px;
     margin-right: 6px;
@@ -38,12 +34,14 @@
     margin-left: 20px;
   }
 </style>
-<div class="header w-screen">
-  <div class="content">
+<div class="header">
+  <div class="content w-page">
     <a href="../../" class="logo">
-      <i class="material-icons">menu</i>
+      <!-- <i class="material-icons">menu</i> -->
+      Distill
       </a>
-    <a href="" class="nav">Contribute</a>
-    <a href="" class="nav">About</a>
+      <a href="" class="nav"><i class="material-icons">more_horiz</i></a>
+      <a href="" class="nav"><i class="material-icons">mode_comment</i></a>
+      <a href="" class="nav"><i class="material-icons">toc</i></a>
   </div>
 </div>

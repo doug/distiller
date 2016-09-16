@@ -22,18 +22,20 @@ let zeroPadding = function(n) {
   return n < 10 ? "0" + n : n;
 }
 
-// Open and cache the templates in typewriter
-let templateDir = path.join(__dirname, '..', 'templates');
-let templates = {};
-fs.readdirSync(templateDir)
-  .filter((file) => {
-    return fs.statSync(path.join(templateDir, file)).isFile();
-  })
-  .forEach((file) => {
-    templates[file] = fs.readFileSync(path.join(templateDir, file), 'utf8');
-  });
+
 
 module.exports = function (dir, callback) {
+  // Open and cache the templates in typewriter
+  let templateDir = path.join(__dirname, '..', 'templates');
+  let templates = {};
+  fs.readdirSync(templateDir)
+    .filter((file) => {
+      return fs.statSync(path.join(templateDir, file)).isFile();
+    })
+    .forEach((file) => {
+      templates[file] = fs.readFileSync(path.join(templateDir, file), 'utf8');
+    });
+    
   let assetsDir = path.join(dir, 'assets');
   let view = [];
 
