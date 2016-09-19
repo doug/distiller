@@ -20,7 +20,7 @@ A typewriter project folder looks like this:
 
 ```
 index.html | index.md
-about.json
+package.json
 assets/
 ```
 
@@ -28,21 +28,39 @@ assets/
 
 Assets can referenced with relative paths, such as `"assets/foo.js"`.
 
-The `about.json` file contains metadata about the post. It looks like this:
+The `package.json` file is a npm package file with a typewriter object with metadata about the post. It looks like this:
 
 ```json
 {
-  "headline": "",
-  "description": "",
-  "name": "",
-  "authors": [
-    {
-      "name" : "Barney Rubble",
-      "email" : "b@rubble.com",
-      "affiliation": "Google Brain",
-      "url": "http://barnyrubble.tumblr.com/"
-    }
-  ]
+  "main": "index.md",
+  "name": "augmented-rnns",
+  "typewriter": {
+    "title": "Attention and Augmented Recurrent Neural Networks",
+    "description": "A visual overview of neural attention, and the powerful extensions being built on top of it.",
+    "url": "http://distill.pub/2016/augmented-rnns/",
+    "github": "https://github.com/distillpub/post--augmented-rnns",
+    "firstPublished": "Thu Sep 08 2016 10:27:05 GMT-0700 (PDT)",
+    "lastPublished": "Thu Sep 08 2016 10:27:05 GMT-0700 (PDT)",
+    "authors": [
+      {
+        "firstName": "Chris",
+        "lastName": "Olah",
+        "personalURL": "http://colah.github.io",
+        "affiliation": "Google Brain",
+        "affiliationURL": "http://g.co/brain"
+      },
+      {
+        "firstName": "Shan",
+        "lastName": "Carter",
+        "personalURL": "http://shancarter.com",
+        "affiliation": "Google Brain",
+        "affiliationURL": "http://g.co/brain"
+      }
+    ]
+  },
+  "dependencies": {
+    "d3": "^4.2.2"
+  }
 }
 ```
 
@@ -50,4 +68,4 @@ The `about.json` file contains metadata about the post. It looks like this:
 
 `typewriter serve`
 
-Starts a watching server. Must be executed in the root of the a typewriter project. It will auto-reload when it detects changes. Files are rendered into a `build` folder.
+Starts a http server. Must be executed in the root of the a typewriter project. Files are rendered into a `build` folder.
