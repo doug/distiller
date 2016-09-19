@@ -24,20 +24,25 @@ if (fs.existsSync(path)) {
 fs.mkdirSync(path);
 fs.writeFileSync(path + "index.md", "#Hello World!", "utf8");
 fs.mkdirSync(path + "assets");
-var about = {
-  "name": name,
-  "created": now,
-  "headline": "",
-  "description": "",
-  "authors": [
-    {
-      "name": "",
-      "email": "",
-      "url": "",
-      "affiliation": "",
-      "affiliation-url": ""
-    }
-  ]
-};
+var packageJson = {
+  "main": "index.md",
+  "name": "augmented-rnns",
+  "typewriter": {
+    "title": "",
+    "description": "",
+    "url": "",
+    "github": "",
+    "firstPublished": "",
+    "lastPublished": "",
+    "authors": [
+      {
+        "firstName": "",
+        "lastName": "",
+        "personalURL": "",
+        "affiliation": "",
+        "affiliationURL": ""
+      }
+    ]
+  };
 
-fs.writeFileSync(path + "about.json", JSON.stringify(about, null, 2), "utf8");
+fs.writeFileSync(path + "package.json", JSON.stringify(packageJson, null, 2), "utf8");
