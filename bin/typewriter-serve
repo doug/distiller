@@ -60,3 +60,5 @@ require('http').createServer(function (request, response) {
         renderIndex(() => fileServer.serve(request, response));
     }).resume();
 }).listen(3000);
+
+console.log("Typewriter is listening at localhost:3000");

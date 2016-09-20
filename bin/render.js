@@ -22,8 +22,6 @@ let zeroPadding = function(n) {
   return n < 10 ? "0" + n : n;
 }
 
-
-
 module.exports = function (dir, callback) {
   // Open and cache the templates in typewriter
   let templateDir = path.join(__dirname, '..', 'templates');
@@ -35,7 +33,7 @@ module.exports = function (dir, callback) {
     .forEach((file) => {
       templates[file] = fs.readFileSync(path.join(templateDir, file), 'utf8');
     });
-    
+
   let assetsDir = path.join(dir, 'assets');
   let view = [];
 

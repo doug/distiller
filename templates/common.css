@@ -267,12 +267,12 @@ figure {
 
 .post {
   color: rgba(0, 0, 0, 0.8);
-  font: 15px/1.75em Cardo, 'Open Sans', sans-serif;
+  font: 15px/1.6em Georgia, serif;
 }
 
 @media(min-width: 1024px) {
   .post {
-    font-size: 16px;
+    font-size: 20px;
   }
 }
 
@@ -283,15 +283,15 @@ figure {
 }
 
 .post h1 {
-  font: 400 32px/1.1em 'PT Serif', Georgia, serif;
-  -webkit-font-smoothing: antialiased;
-
+  font: 400 32px/1.1em Cardo, Georgia, serif;
+  /*-webkit-font-smoothing: antialiased;*/
 }
 
 @media(min-width: 1024px) {
   .post h1 {
-    font-size: 50px;
+    font-size: 52px;
     margin-bottom: 15px;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -323,6 +323,15 @@ figure {
 
 .post a {
   color: inherit;
+
+}
+
+.post p a {
+  text-decoration: none;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 50%);
+  background-repeat: repeat-x;
+  background-size: 2px 0.1em;
+  background-position: 0 1em;
 }
 
 .post p .link {
@@ -332,7 +341,7 @@ figure {
 
 .post p {
   margin-bottom: 24px;
-  /*-webkit-font-smoothing: antialiased;*/
+  -webkit-font-smoothing: antialiased;
 }
 
 .post p code {

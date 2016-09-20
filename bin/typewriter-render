@@ -2,10 +2,18 @@
 
 var fs = require("fs"),
   program = require("commander"),
+    path = require('path'),
   render = require("./render");
 
 program
     .version("0.0.1")
     .parse(process.argv);
 
-render();
+var inputDir = program.args[0];
+var outputDir = program.args[1];
+
+console.log(inputDir, outputDir)
+
+render(inputDir, (rendered) => {
+  fs.writeFileSync(path.join(outputDir, 'index.html'), rendered);
+});

@@ -43,6 +43,7 @@ var packageJson = {
         "affiliationURL": ""
       }
     ]
-  };
+  }
+};
 
 fs.writeFileSync(path + "package.json", JSON.stringify(packageJson, null, 2), "utf8");
