@@ -38,32 +38,37 @@ module.exports = function (dir, callback) {
   let view = [];
 
   //Open package.json and add typewriter vars to partials
-  var packageText = fs.readFileSync(path.join(dir, 'package.json'), 'utf8');
-  let typewriterData = JSON.parse(packageText);
-  view = typewriterData;
-  view.typewriter.firstPublished = new Date(view.typewriter.firstPublished);
-  view.typewriter.firstPublishedYear = view.typewriter.firstPublished.getFullYear();
-  view.typewriter.firstPublishedMonth = months[view.typewriter.firstPublished.getMonth()];
-  view.typewriter.firstPublishedDate = view.typewriter.firstPublished.getDate();
-  view.typewriter.lastPublished = new Date(view.typewriter.lastPublished);
-  view.typewriter.citationDate = zeroPadding(view.typewriter.firstPublished.getDate());
-  view.typewriter.citationMonth = zeroPadding(view.typewriter.firstPublished.getMonth() + 1);
-  if (view.typewriter.authors.length  > 2) {
-    view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName + ", et al.";
-  } else if (view.typewriter.authors.length === 2) {
-    view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName + " & " + view.typewriter.authors[1].lastName;
-  } else if (view.typewriter.authors.length === 1) {
-    view.typewriter.concatenatedAuthors = view.typewriter.authors[0].lastName
+  try{
+    var packageText = fs.readFileSync(path.join(dir, 'package.json'), 'utf8');
+    let distillData = JSON.parse(packageText);
+    view = distillData;
+    view.distill.firstPublished = new Date(view.distill.firstPublished);
+    view.distill.firstPublishedYear = view.distill.firstPublished.getFullYear();
+    view.distill.firstPublishedMonth = months[view.distill.firstPublished.getMonth()];
+    view.distill.firstPublishedDate = view.distill.firstPublished.getDate();
+    view.distill.lastPublished = new Date(view.distill.lastPublished);
+    view.distill.citationDate = zeroPadding(view.distill.firstPublished.getDate());
+    view.distill.citationMonth = zeroPadding(view.distill.firstPublished.getMonth() + 1);
+    if (view.distill.authors.length  > 2) {
+      view.distill.concatenatedAuthors = view.distill.authors[0].lastName + ", et al.";
+    } else if (view.distill.authors.length === 2) {
+      view.distill.concatenatedAuthors = view.distill.authors[0].lastName + " & " + view.distill.authors[1].lastName;
+    } else if (view.distill.authors.length === 1) {
+      view.distill.concatenatedAuthors = view.distill.authors[0].lastName
+    }
+    view.distill.bibtexAuthors = view.distill.authors.map(function(author){
+      return author.lastName + ", " + author.firstName;
+    }).join(" and ");
+
+    view.distill.slug = view.distill.authors[0].lastName.toLowerCase() + view.distill.firstPublishedYear + view.distill.title.split(" ")[0].toLowerCase()
+  } catch(e) {
+    console.log("error reading package.json");
   }
-  view.typewriter.bibtexAuthors = view.typewriter.authors.map(function(author){
-    return author.lastName + ", " + author.firstName;
-  }).join(" and ");
 
-  view.typewriter.slug = view.typewriter.authors[0].lastName.toLowerCase() + view.typewriter.firstPublishedYear + view.typewriter.title.split(" ")[0].toLowerCase()
-
-  //Open text "_assets" and add those to available partials
   let textExtensions = ['.js', '.css', '.svg', '.csv', '.txt', '.html'];
   let assetTemplates = JSON.parse(JSON.stringify(templates));
+  try {
+  //Open text "_assets" and add those to available partials
   fs.readdirSync(assetsDir)
     .filter((file) => {
       return textExtensions.indexOf(path.extname(file)) > -1;
@@ -86,6 +91,10 @@ module.exports = function (dir, callback) {
       let html = mustache.render(contents, view, assetTemplates);
       assetTemplates['assets/' + file] = html;
     });
+
+  } catch (e) {
+    console.log("No assets folder");
+  }
 
   //if markdown
   fs.readFile(path.join(dir, 'index.md'), 'utf8', (error, data) => {

@@ -1,18 +1,18 @@
 <div class="byline">
   <div class="authors">
-  {{#typewriter.authors}}
+  {{#distill.authors}}
     <div class="author">
       <a class="name" href="{{personalURL}}">{{firstName}} {{lastName}}</a>
       <a class="affiliation" href="{{affiliationURL}}">{{affiliation}}</a>
     </div>
-  {{/typewriter.authors}}
+  {{/distill.authors}}
   </div>
   <div class="date">
-    <div class="month">{{typewriter.firstPublishedMonth}}. {{typewriter.firstPublishedDate}}</div>
-    <div class="year">{{typewriter.firstPublishedYear}}</div>
+    <div class="month">{{distill.firstPublishedMonth}}. {{distill.firstPublishedDate}}</div>
+    <div class="year">{{distill.firstPublishedYear}}</div>
   </div>
   <a class="citation" href="#citation">
     <div>Citation:</div>
-    <div>{{typewriter.concatenatedAuthors}}, {{typewriter.firstPublishedYear}}</div>
+    <div>{{distill.concatenatedAuthors}}, {{distill.firstPublishedYear}}</div>
   </a>
 </div>

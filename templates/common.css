@@ -1,3 +1,7 @@
+html {
+  background-color: #fafafa;
+}
+
 figure {
   margin: 0;
 }
@@ -267,12 +271,12 @@ figure {
 
 .post {
   color: rgba(0, 0, 0, 0.8);
-  font: 15px/1.6em Georgia, serif;
+  font: 15px/1.75em "Open Sans", sans-serif;
 }
 
 @media(min-width: 1024px) {
   .post {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
