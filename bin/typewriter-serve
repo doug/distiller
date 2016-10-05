@@ -27,6 +27,8 @@ try {
 exec('cp -r ' + assetsDir + ' ' + buildAssetsDir);
 
 function renderIndex(callback) {
+  var packageText = fs.readFileSync(path.join(workingDir, 'package.json'), 'utf8');
+  var distillData = JSON.parse(packageText);
   render(workingDir, (rendered) => {
     fs.writeFileSync(path.join(workingDir, buildDirName, 'index.html'), rendered);
     callback();

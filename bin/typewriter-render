@@ -7,13 +7,25 @@ var fs = require("fs"),
 
 program
     .version("0.0.1")
+    .option("-i, --input <s>", "Input directory")
+    .option("-o, --output <s>", "Output directory")
+    .option("-p, --package <s>", "JSON package data")
     .parse(process.argv);
 
-var inputDir = program.args[0];
-var outputDir = program.args[1];
+var inputDir = program.input;
+var outputDir = program.output;
+var distillData = {};
+if (program.package) {
+  distillData = JSON.parse(program.package)
+} else {
+  try {
+    var packageText = fs.readFileSync(path.join(inputDir, 'package.json'), 'utf8');
+    distillData = JSON.parse(packageText);
+  } catch(e) {
+    console.log("No package.json file found.")
+  }
+}
 
-console.log(inputDir, outputDir)
-
-render(inputDir, (rendered) => {
+render(inputDir, distillData, (rendered) => {
   fs.writeFileSync(path.join(outputDir, 'index.html'), rendered);
 });

@@ -22,7 +22,7 @@ let zeroPadding = function(n) {
   return n < 10 ? "0" + n : n;
 }
 
-module.exports = function (dir, callback) {
+module.exports = function (dir, distillData, callback) {
   // Open and cache the templates in typewriter
   let templateDir = path.join(__dirname, '..', 'templates');
   let templates = {};
@@ -39,8 +39,6 @@ module.exports = function (dir, callback) {
 
   //Open package.json and add typewriter vars to partials
   try{
-    var packageText = fs.readFileSync(path.join(dir, 'package.json'), 'utf8');
-    let distillData = JSON.parse(packageText);
     view = distillData;
     view.distill.firstPublished = new Date(view.distill.firstPublished);
     view.distill.firstPublishedYear = view.distill.firstPublished.getFullYear();
