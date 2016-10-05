@@ -35,11 +35,11 @@ module.exports = function (dir, distillData, callback) {
     });
 
   let assetsDir = path.join(dir, 'assets');
-  let view = [];
+  let view = {};
 
-  //Open package.json and add typewriter vars to partials
+  //Add vars to the view
+  view = distillData;
   try{
-    view = distillData;
     view.distill.firstPublished = new Date(view.distill.firstPublished);
     view.distill.firstPublishedYear = view.distill.firstPublished.getFullYear();
     view.distill.firstPublishedMonth = months[view.distill.firstPublished.getMonth()];
@@ -60,7 +60,7 @@ module.exports = function (dir, distillData, callback) {
 
     view.distill.slug = view.distill.authors[0].lastName.toLowerCase() + view.distill.firstPublishedYear + view.distill.title.split(" ")[0].toLowerCase()
   } catch(e) {
-    console.log("error reading package.json");
+    console.log("error sanitizing properties on package.json");
   }
 
   let textExtensions = ['.js', '.css', '.svg', '.csv', '.txt', '.html'];
