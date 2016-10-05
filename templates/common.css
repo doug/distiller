@@ -37,7 +37,8 @@ figure {
 .post > figure,
 .post > pre,
 .post > p,
-.post > .byline {
+.post > .byline,
+.w-body {
   margin-left: 20px;
   margin-right: 20px;
   box-sizing: border-box;
@@ -70,7 +71,8 @@ figure {
   .post > figure,
   .post > pre,
   .post > p,
-  .post > .byline {
+  .post > .byline,
+  .w-body {
     margin-left: 72px;
     margin-right: 72px;
   }
@@ -88,18 +90,13 @@ figure {
   .post > figure,
   .post > pre,
   .post > p,
-  .post > .byline {
+  .post > .byline,
+  .w-body {
     margin-left: auto;
     margin-right: auto;
     width: 648px;
   }
 
-  .w-body,
-  .post .w-body {
-    margin-left: auto;
-    margin-right: auto;
-    width: 648px;
-  }
   .w-body-plus,
   .post .w-body-plus {
     width: 744px;

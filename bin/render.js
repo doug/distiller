@@ -1,9 +1,16 @@
 'use strict';
 
-var path = require('path'),
-  fs = require('fs'),
-  mustache = require('mustache'),
-  marked = require('marked');
+var path = require("path"),
+  fs = require("fs"),
+  mustache = require("mustache"),
+  marked = require("marked"),
+  babel = require("babel-core");
+
+console.log(__dirname);
+
+var babelOptions = {
+  "presets": [path.join(__dirname, "..", "node_modules", "babel-preset-es2015")]
+};
 
 // Marked rendering options
 marked.setOptions({
@@ -76,8 +83,16 @@ module.exports = function (dir, distillData, callback) {
     })
     .forEach((file) => {
       let contents = fs.readFileSync(path.join(assetsDir, file), 'utf8');
+
+      // babel js files
+      if (path.extname(file) === ".js") {
+        // var babelResult = babel.transform(contents, babelOptions);
+        // contents = babelResult.code;
+      }
       //Remove the xml file header for svg files
-      contents = contents.replace(/<\?xml(.+?)\?>/, '');
+      if (path.extname(file) === ".svg") {
+        contents = contents.replace(/<\?xml(.+?)\?>/, '');
+      }
       assetTemplates['assets/' + file] = contents;
     });
 
@@ -91,7 +106,7 @@ module.exports = function (dir, distillData, callback) {
     });
 
   } catch (e) {
-    console.log("No assets folder");
+    console.log(e, "No assets folder");
   }
 
   //if markdown

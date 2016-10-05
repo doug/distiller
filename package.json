@@ -1,6 +1,6 @@
 {
   "name": "distiller",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Development server for distill.pub.",
   "homepage": "http://http://distill.pub/",
   "main": "bin/render.js",
@@ -9,10 +9,12 @@
     "distiller": "bin/distiller"
   },
   "dependencies": {
+    "babel-core": "^6.17.0",
+    "babel-preset-es2015": "^6.16.0",
     "chokidar": "^1.6.0",
-    "node-static": "^0.7.8",
     "commander": "^2.9.0",
     "marked": "^0.3.5",
-    "mustache": "^2.2.1"
+    "mustache": "^2.2.1",
+    "node-static": "^0.7.8"
   }
 }
