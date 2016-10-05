@@ -8,12 +8,10 @@
   "bin": {
     "distiller": "bin/distiller"
   },
-  "devDependencies": {
-    "chokidar": "^1.6.0",
-    "commander": "^2.9.0",
-    "node-static": "^0.7.8"
-  },
   "dependencies": {
+    "chokidar": "^1.6.0",
+    "node-static": "^0.7.8",
+    "commander": "^2.9.0",
     "marked": "^0.3.5",
     "mustache": "^2.2.1"
   }
