@@ -1,4 +1,4 @@
-# About Typewriter
+# About Distiller
 
 ## Installing
 
@@ -6,17 +6,17 @@ To install, first clone this repo somewhere.
 
 Then, `npm install`.
 
-Finally, symlink the `bin/typewriter` binary into your working path, something like:
+Finally, symlink the `bin/distiller` binary into your working path, something like:
 
-`ln -s bin/typewriter /usr/local/bin/typewriter`
+`ln -s bin/distiller /usr/local/bin/distiller`
 
 ## Creating a new project
 
-`typewriter create <name>`
+`distiller create <name>`
 
-Creates a new typewriter project. It will create a folder in your current directory with `<name>` and create some stub files inside.
+Creates a new distiller project. It will create a folder in your current directory with `<name>` and create some stub files inside.
 
-A typewriter project folder looks like this:
+A distiller project folder looks like this:
 
 ```
 index.html | index.md
@@ -24,17 +24,17 @@ package.json
 assets/
 ```
 
-`index.html` is an html fragment that defines your post, or a `index.md` markdown file. Typewriter will wrap it in the necessary blog html.
+`index.html` is an html fragment that defines your post, or a `index.md` markdown file. Distiller will wrap it in the necessary blog html.
 
 Assets can referenced with relative paths, such as `"assets/foo.js"`.
 
-The `package.json` file is a npm package file with a typewriter object with metadata about the post. It looks like this:
+The `package.json` file is a npm package file with a distill object with metadata about the post. It looks like this:
 
 ```json
 {
   "main": "index.md",
   "name": "augmented-rnns",
-  "typewriter": {
+  "distill": {
     "title": "Attention and Augmented Recurrent Neural Networks",
     "description": "A visual overview of neural attention, and the powerful extensions being built on top of it.",
     "url": "http://distill.pub/2016/augmented-rnns/",
@@ -66,6 +66,6 @@ The `package.json` file is a npm package file with a typewriter object with meta
 
 ## Working with a project
 
-`typewriter serve`
+`distiller serve`
 
-Starts a http server. Must be executed in the root of the a typewriter project. Files are rendered into a `build` folder.
+Starts a http server. Must be executed in the root of the a distiller project. Files are rendered into a `build` folder.

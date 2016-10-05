@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+var fs = require("fs"),
+    program = require("commander");
+
+program
+  .version("0.0.1")
+  .command("create <name>", "Creates a new distill project. It will create a folder in your current directory with <name> and create some stub files inside.")
+  .command("render -i <input> -o <output>", "Renders a index file from <input> into <output>.")
+  .command("serve", "Starts a server. Must be executed in the root of the a typewriter project.")
+  .parse(process.argv);

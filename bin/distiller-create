@@ -27,7 +27,7 @@ fs.mkdirSync(path + "assets");
 var packageJson = {
   "main": "index.md",
   "name": "augmented-rnns",
-  "typewriter": {
+  "distill": {
     "title": "",
     "description": "",
     "url": "",
