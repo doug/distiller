@@ -1,6 +1,6 @@
 {
   "name": "distiller",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Development server for distill.pub.",
   "homepage": "http://http://distill.pub/",
   "main": "bin/render.js",
