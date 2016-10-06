@@ -4,13 +4,11 @@ var path = require("path"),
   fs = require("fs"),
   mustache = require("mustache"),
   marked = require("marked"),
-  babel = require("babel-core");
+  rollup = require("rollup"),
+  babel = require("rollup-plugin-babel"),
+  nodeResolve = require("rollup-plugin-node-resolve");
 
 console.log(__dirname);
-
-var babelOptions = {
-  "presets": [path.join(__dirname, "..", "node_modules", "babel-preset-es2015")]
-};
 
 // Marked rendering options
 marked.setOptions({
@@ -84,11 +82,6 @@ module.exports = function (dir, distillData, callback) {
     .forEach((file) => {
       let contents = fs.readFileSync(path.join(assetsDir, file), 'utf8');
 
-      // babel js files
-      if (path.extname(file) === ".js") {
-        // var babelResult = babel.transform(contents, babelOptions);
-        // contents = babelResult.code;
-      }
       //Remove the xml file header for svg files
       if (path.extname(file) === ".svg") {
         contents = contents.replace(/<\?xml(.+?)\?>/, '');
@@ -109,6 +102,27 @@ module.exports = function (dir, distillData, callback) {
     console.log(e, "No assets folder");
   }
 
+  // Use rollup to compile index.js is provided.
+  function compileJs() {
+    const indexjs = path.join(dir, 'index.js');
+    if (!fs.existsSync(indexjs)) {
+      return Promise.resolve('');
+    }
+    return rollup.rollup({
+      entry: indexjs,
+      plugins: [babel(), nodeResolve({esnext: true})],
+    }).then((bundle) => {
+      const result = bundle.generate({
+        format: 'es',
+      });
+      return result.code;
+    }).catch((err) => {
+      console.log('compile error', err);
+      return '';
+    });
+  }
+
+
   //if markdown
   fs.readFile(path.join(dir, 'index.md'), 'utf8', (error, data) => {
     if (error) return;
@@ -117,13 +131,19 @@ module.exports = function (dir, distillData, callback) {
     html = html.replace(/{{&gt;/g, '{{>');
     let renderedHtml = mustache.render(html, view, assetTemplates);
     templates['index.html'] = renderedHtml;
-    callback(mustache.render(templates['root.html'], view, templates));
+    compileJs().then((js) => {
+      view.extra_js = `<script type="text/javascript">${js}</script>`;
+      callback(mustache.render(templates['root.html'], view, templates));
+    });
   });
 
   //if html
   fs.readFile(path.join(dir, 'index.html'), 'utf8', (error, data) => {
     if (error) return;
     templates['index.html'] = mustache.render(data, view, assetTemplates);
-    callback(mustache.render(templates['root.html'], view, templates));
+    compileJs().then((js) => {
+      view.extra_js = `<script type="text/javascript">${js}</script>`;
+      callback(mustache.render(templates['root.html'], view, templates));
+    });
   });
 }
